@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Task Tracker</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">TT</div>
+      <div>
+        <h1>Task Tracker</h1>
+        <p class="muted">Local-only JIRA-style board</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="btnNew" class="btn primary">+ New Task</button>
+      <button id="btnBackupDir" class="btn ghost" title="Pick folder where backups are saved">Set Backup Folder</button>
+      <button id="btnExport" class="btn ghost" title="Export JSON backup now">Backup Now</button>
+      <button id="btnImport" class="btn ghost" title="Import JSON">Import</button>
+      <input type="file" id="fileImport" accept="application/json" hidden />
+    </div>
+  </header>
+
+  <section class="controls">
+    <div class="left-controls">
+      <input id="search" class="input" type="text" placeholder="Search title, notes, subtasks..." />
+      <select id="filterStatus" class="input">
+        <option value="all">All statuses</option>
+        <option value="todo">To Do</option>
+        <option value="in_progress">In Progress</option>
+        <option value="in_review">In Review</option>
+        <option value="blocked">Blocked</option>
+        <option value="done">Done</option>
+      </select>
+      <select id="filterPriority" class="input">
+        <option value="all">All priorities</option>
+        <option value="highest">Highest</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+        <option value="lowest">Lowest</option>
+      </select>
+      <select id="sortBy" class="input">
+        <option value="created_desc">Newest</option>
+        <option value="created_asc">Oldest</option>
+        <option value="due_asc">Due soonest</option>
+        <option value="due_desc">Due latest</option>
+        <option value="priority">Priority</option>
+        <option value="title">Title A-Z</option>
+        <option value="status">Status</option>
+      </select>
+      <label class="toggle">
+        <input type="checkbox" id="showCompleted" checked />
+        <span>Show completed</span>
+      </label>
+    </div>
+    <div class="view-toggle">
+      <button class="btn tab active" data-view="board">Board</button>
+      <button class="btn tab" data-view="list">List</button>
+      <button class="btn tab" data-view="completed">Completed</button>
+    </div>
+  </section>
+
+  <main id="main"></main>
+
+  <!-- Task modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="modalTitle">Task</h2>
+        <button id="modalClose" class="icon-btn">&times;</button>
+      </header>
+      <div class="modal-body">
+        <label>Title
+          <input id="fTitle" class="input" type="text" placeholder="Brief summary" />
+        </label>
+        <label>Description
+          <textarea id="fDesc" class="input" rows="3" placeholder="What needs to happen?"></textarea>
+        </label>
+        <div class="row">
+          <label>Status
+            <select id="fStatus" class="input">
+              <option value="todo">To Do</option>
+              <option value="in_progress">In Progress</option>
+              <option value="in_review">In Review</option>
+              <option value="blocked">Blocked</option>
+              <option value="done">Done</option>
+            </select>
+          </label>
+          <label>Priority
+            <select id="fPriority" class="input">
+              <option value="highest">Highest</option>
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+              <option value="lowest">Lowest</option>
+            </select>
+          </label>
+          <label>Due date
+            <input id="fDue" class="input" type="date" />
+          </label>
+        </div>
+        <label>Labels (comma-separated)
+          <input id="fLabels" class="input" type="text" placeholder="frontend, bug, urgent" />
+        </label>
+
+        <section class="block">
+          <div class="block-header">
+            <h3>Subtasks</h3>
+            <button id="btnAddSub" class="btn small">+ Add subtask</button>
+          </div>
+          <ul id="subList" class="sub-list"></ul>
+        </section>
+
+        <section class="block">
+          <div class="block-header">
+            <h3>Notes</h3>
+            <button id="btnAddNote" class="btn small">+ Add note</button>
+          </div>
+          <ul id="noteList" class="note-list"></ul>
+        </section>
+
+        <div class="meta-foot">
+          <span id="metaCreated"></span>
+          <span id="metaUpdated"></span>
+        </div>
+      </div>
+      <footer class="modal-footer">
+        <button id="btnDelete" class="btn danger">Delete</button>
+        <div>
+          <button id="btnCancel" class="btn ghost">Cancel</button>
+          <button id="btnSave" class="btn primary">Save</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
