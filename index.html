@@ -17,10 +17,12 @@
     </div>
     <div class="top-actions">
       <button id="btnNew" class="btn primary">+ New Task</button>
+      <button id="btnNewSprint" class="btn ghost">+ Sprint</button>
       <button id="btnBackupDir" class="btn ghost" title="Pick folder where backups are saved">Set Backup Folder</button>
       <button id="btnExport" class="btn ghost" title="Export JSON backup now">Backup Now</button>
       <button id="btnImport" class="btn ghost" title="Import JSON">Import</button>
       <input type="file" id="fileImport" accept="application/json" hidden />
+      <button id="btnTheme" class="btn ghost theme-btn" title="Toggle theme">🌙</button>
     </div>
   </header>
 
@@ -52,8 +54,11 @@
         <option value="title">Title A-Z</option>
         <option value="status">Status</option>
       </select>
+      <select id="filterSprint" class="input">
+        <option value="all">All sprints</option>
+      </select>
       <label class="toggle">
-        <input type="checkbox" id="showCompleted" checked />
+        <input type="checkbox" id="showCompleted" />
         <span>Show completed</span>
       </label>
     </div>
@@ -63,6 +68,8 @@
       <button class="btn tab" data-view="completed">Completed</button>
     </div>
   </section>
+
+  <div id="focusStrip" class="focus-strip"></div>
 
   <main id="main"></main>
 
@@ -103,9 +110,16 @@
             <input id="fDue" class="input" type="date" />
           </label>
         </div>
-        <label>Labels (comma-separated)
-          <input id="fLabels" class="input" type="text" placeholder="frontend, bug, urgent" />
-        </label>
+        <div class="row">
+          <label>Sprint
+            <select id="fSprint" class="input">
+              <option value="">— No sprint —</option>
+            </select>
+          </label>
+          <label style="grid-column: span 2;">Labels (comma-separated)
+            <input id="fLabels" class="input" type="text" placeholder="frontend, bug, urgent" />
+          </label>
+        </div>
 
         <section class="block">
           <div class="block-header">

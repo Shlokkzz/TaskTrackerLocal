@@ -503,3 +503,176 @@ main { padding: 8px 28px 48px; }
   #search { min-width: 100%; }
   .input, select { min-width: 140px; flex: 1; }
 }
+
+/* =============================================
+   STAR / FOCUS BUTTON ON CARDS
+   ============================================= */
+.star-btn {
+  position: absolute; top: 10px; right: 10px;
+  background: none; border: none; cursor: pointer;
+  font-size: 15px; color: var(--muted-2);
+  opacity: 0;
+  transition: opacity var(--trans), color var(--trans), transform var(--trans);
+  padding: 2px 4px; z-index: 1; line-height: 1;
+  border-radius: 4px;
+}
+.card:hover .star-btn,
+.star-btn.starred { opacity: 1; }
+.star-btn:hover { color: var(--warn); transform: scale(1.2); }
+.star-btn.starred { color: var(--warn); }
+.card .title { padding-right: 22px; }
+
+/* =============================================
+   FOCUS STRIP (always-visible, full-size cards)
+   ============================================= */
+.focus-strip {
+  display: flex; align-items: flex-start; gap: 14px;
+  margin: 0 28px 12px;
+  padding: 12px 14px;
+  min-height: 60px;
+  background: rgba(251,191,36,0.04);
+  border: 1.5px dashed rgba(245,158,11,0.35);
+  border-radius: var(--radius);
+  transition: background var(--trans), border-color var(--trans), box-shadow var(--trans);
+  overflow-x: auto;
+}
+.focus-strip.has-tasks {
+  border-style: solid;
+  border-color: rgba(245,158,11,0.4);
+}
+.focus-strip.drag-over {
+  background: rgba(251,191,36,0.13);
+  border-style: solid;
+  border-color: var(--warn);
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
+}
+.focus-strip-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+  color: #b45309; white-space: nowrap; text-transform: uppercase;
+  padding-top: 14px; /* align with card title */
+  min-width: 52px;
+}
+html.dark .focus-strip-label { color: var(--warn); }
+.focus-strip-inner {
+  display: flex; gap: 12px; align-items: flex-start; flex: 1;
+}
+.focus-strip-hint {
+  font-size: 13px; color: var(--muted-2); font-style: italic;
+  align-self: center; padding: 8px 0;
+}
+/* Cards inside the focus strip: fixed width, amber accent */
+.focus-strip .card {
+  min-width: 260px; max-width: 300px; flex-shrink: 0;
+  border-color: rgba(245,158,11,0.3);
+}
+.focus-strip .card:hover {
+  border-color: rgba(245,158,11,0.65);
+  box-shadow: 0 0 0 2px rgba(245,158,11,0.1), var(--shadow-md);
+}
+
+/* theme button */
+.theme-btn { font-size: 17px; padding: 6px 10px; }
+
+/* =============================================
+   DARK THEME
+   ============================================= */
+html.dark {
+  --bg: #0d1117;
+  --bg-2: #161b22;
+  --surface: #1c2128;
+  --surface-2: #22272e;
+  --border: #30363d;
+  --border-strong: #484f58;
+  --text: #e6edf3;
+  --text-2: #8b949e;
+  --muted: #6e7681;
+  --muted-2: #3d444d;
+  --brand: #818cf8;
+  --brand-2: #a78bfa;
+  --brand-soft: #1a1f35;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.4);
+  --shadow-lg: 0 20px 40px rgba(0,0,0,0.7), 0 8px 16px rgba(0,0,0,0.5);
+}
+
+html.dark .pill.st-todo        { background: #1f2937; color: #9ca3af;  border-color: #374151; }
+html.dark .pill.st-in_progress { background: #0c2340; color: #38bdf8;  border-color: #1e3a5f; }
+html.dark .pill.st-in_review   { background: #1e1040; color: #a78bfa;  border-color: #3b1f70; }
+html.dark .pill.st-blocked     { background: #2d0f0f; color: #f87171;  border-color: #5a1c1c; }
+html.dark .pill.st-done        { background: #0a2a1e; color: #34d399;  border-color: #165433; }
+
+html.dark .pill.pri-highest { background: #2d0f17; color: #fb7185; border-color: #5a1c2e; }
+html.dark .pill.pri-high    { background: #2d1a0a; color: #fb923c; border-color: #5a3515; }
+html.dark .pill.pri-medium  { background: #2a2007; color: #fbbf24; border-color: #54400e; }
+html.dark .pill.pri-low     { background: #0c2340; color: #38bdf8; border-color: #1e3a5f; }
+html.dark .pill.pri-lowest  { background: #1a2030; color: #64748b; border-color: #2d3650; }
+
+html.dark .label           { background: #1a1f35; color: #818cf8; }
+html.dark .link-chip       { background: var(--surface-2); border-color: var(--border); }
+html.dark .toggle          { background: var(--surface); }
+html.dark .col-body.drop-target { background: #1a1f35; }
+html.dark ::-webkit-scrollbar-thumb { background: #30363d; }
+html.dark ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+html.dark .focus-strip { background: rgba(251,191,36,0.03); border-color: rgba(245,158,11,0.25); }
+html.dark .focus-strip.drag-over { background: rgba(251,191,36,0.08); }
+
+/* =============================================
+   SPRINT SECTIONS (list view)
+   ============================================= */
+.sprint-section {
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.sprint-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.sprint-collapse-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 11px; padding: 2px 6px;
+  border-radius: 4px; line-height: 1;
+  transition: background var(--trans), color var(--trans);
+}
+.sprint-collapse-btn:hover { background: var(--bg-2); color: var(--text); }
+.sprint-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.sprint-badge {
+  font-size: 11px; font-weight: 600; padding: 2px 9px;
+  border-radius: 999px; border: 1px solid transparent;
+}
+.sprint-badge-active    { background: #d1fae5; color: #047857; border-color: #a7f3d0; }
+.sprint-badge-planned   { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+.sprint-badge-completed { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+html.dark .sprint-badge-active    { background: #0a2a1e; color: #34d399; border-color: #165433; }
+html.dark .sprint-badge-planned   { background: #0c2340; color: #38bdf8; border-color: #1e3a5f; }
+html.dark .sprint-badge-completed { background: #1a2030; color: #64748b; border-color: #2d3650; }
+.sprint-dates { font-size: 11px; color: var(--muted); font-family: ui-monospace, monospace; }
+.sprint-task-count { font-size: 11px; color: var(--muted); margin-left: auto; }
+.sprint-actions { display: flex; gap: 6px; }
+
+.sprint-body { padding: 12px; }
+.sprint-body.list { display: flex; flex-direction: column; gap: 8px; }
+.sprint-body .card { box-shadow: none; }
+.sprint-empty {
+  padding: 16px; text-align: center;
+  color: var(--muted); font-size: 13px; font-style: italic;
+}
+/* Status accent bar on sprint header */
+.sprint-active    .sprint-header { box-shadow: inset 4px 0 0 var(--success); }
+.sprint-planned   .sprint-header { box-shadow: inset 4px 0 0 var(--accent); }
+.sprint-completed .sprint-header { box-shadow: inset 4px 0 0 var(--muted-2); }
+.sprint-completed { opacity: 0.75; }
+
+.new-sprint-btn {
+  width: 100%; margin-top: 8px;
+  border: 1.5px dashed var(--border);
+  color: var(--muted); font-size: 13px; padding: 12px;
+  border-radius: var(--radius); box-shadow: none;
+}
+.new-sprint-btn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-soft); }
